@@ -53,12 +53,4 @@ Most studies on music and health focus on simple correlations — people who exe
 - Spotify Web API for audio feature extraction
 - Jupyter Notebooks for analysis and visualization
 
-## Timeline
 
-| Date | Milestone |
-|------|-----------|
-| Mar 17 | ✅ GitHub repo created |
-| Mar 31 | Project proposal submitted |
-| Apr 14 | Data collection, EDA & hypothesis tests |
-| May 5  | ML methods applied |
-| May 18 | Final report & code submission |
