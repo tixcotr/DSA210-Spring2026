@@ -29,15 +29,18 @@ Most studies on music and health focus on simple correlations — people who exe
 - **Sleep duration** and bedtime/wake time
 - Collection: Apple Health app → Export All Health Data (XML → CSV)
 
-### Spotify Data (Personal account + API enrichment):
-- **Listening history** requested via Spotify privacy settings
-- **Audio features** enriched via Spotify Web API:
-  - Average tempo (BPM)
-  - Average energy (0.0–1.0)
-  - Average danceability (0.0–1.0)
-  - Average valence (0.0–1.0, musical positivity)
-  - Listening time-of-day distribution
-- Collection: spotify.com → Privacy Settings → Download Your Data + Spotify Web API
+### YouTube & YouTube Music Data (Google Takeout + YouTube Data API):
+- **Watch history** filtered for music content (YouTube Music listens + music videos on YouTube)
+- **Audio features** enriched via YouTube Data API:
+  - Daily listen counts and total listening duration per day
+  - Video category (to filter music content)
+  - Video title and channel name (for artist/genre inference)
+  - Genre/mood proxies inferred from video metadata (when Spotify match not found)
+  - Listening time-of-day distribution (morning, afternoon, evening, night)
+  - Platform split: proportion of daily music consumption on YouTube Music vs. Spotify
+- Collection: Google Takeout → Google Account → Data & Privacy → Download Your Data → select YouTube → watch-history.json
+
+- **Headphone audio levels** (average dB, peak dB, and exposure duration per day)
 
 ## Hypothesis
 
