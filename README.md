@@ -27,6 +27,7 @@ Most studies on music and health focus on simple correlations — people who exe
 - **Exercise minutes**
 - **Resting heart rate** and heart rate variability
 - **Sleep duration** and bedtime/wake time
+- **Headphone audio levels** (average dB, peak dB, and exposure duration per day)
 - Collection: Apple Health app → Export All Health Data (XML → CSV)
 
 ### YouTube & YouTube Music Data (Google Takeout + YouTube Data API):
@@ -40,8 +41,6 @@ Most studies on music and health focus on simple correlations — people who exe
   - Platform split: proportion of daily music consumption on YouTube Music vs. Spotify
 - Collection: Google Takeout → Google Account → Data & Privacy → Download Your Data → select YouTube → watch-history.json
 
-- **Headphone audio levels** (average dB, peak dB, and exposure duration per day)
-
 ## Hypothesis
 
 **Directional Hypothesis:** Physical activity drives music choice, not the other way around. Specifically, high-activity days Granger-cause a shift toward higher-energy music on subsequent days, but high-energy music listening does not Granger-cause increased physical activity.
@@ -53,7 +52,8 @@ Most studies on music and health focus on simple correlations — people who exe
 ## Tools & Technologies
 - Python (pandas, numpy, scipy, scikit-learn, statsmodels, matplotlib, seaborn)
 - Apple Health export (XML → CSV)
-- Spotify Web API for audio feature extraction
+- YouTube Data API v3 for video metadata
 - Jupyter Notebooks for analysis and visualization
+- Google Takeout for YouTube watch history (JSON → CSV)
 
 
