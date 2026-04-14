@@ -60,14 +60,6 @@ This enrichment transforms a general movie metadata dataset into one that can an
 
 **Alternative Hypothesis (H₁):** Oscar-nominated films have significantly higher budgets, longer runtimes, and higher audience ratings than non-nominated films, and are disproportionately released in Q4 (October–December) compared to the rest of the year.
 
-## Plan
-| Phase | Description | Deadline |
-|-------|-------------|----------|
-| Data Collection | Download, clean, and merge both datasets | April 14 |
-| EDA & Hypothesis Testing | Visualize distributions, run statistical tests | April 14 |
-| Machine Learning | Train classification models, analyze feature importance | May 5 |
-| Final Report | Write up findings, limitations, and conclusions | May 18 |
-
 ## Tools & Technologies
 - Python (pandas, numpy, scipy, scikit-learn, matplotlib, seaborn)
 - Jupyter Notebook for analysis and visualization
