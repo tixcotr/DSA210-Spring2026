@@ -41,6 +41,15 @@ Most studies on music and health focus on simple correlations — people who exe
   - Platform split: proportion of daily music consumption on YouTube Music vs. Spotify
 - Collection: Google Takeout → Google Account → Data & Privacy → Download Your Data → select YouTube → watch-history.json
 
+### Audio Feature Enrichment (Spotify Web API):
+- YouTube Music tracks are matched to Spotify using track name + artist
+- Audio features extracted via Spotify Web API:
+  - Average energy (0.0–1.0)
+  - Average tempo (BPM)
+  - Average danceability (0.0–1.0)
+  - Average valence (0.0–1.0, musical positivity)
+- Unmatched tracks are logged and excluded from analysis
+
 ## Hypothesis
 
 **Directional Hypothesis:** Physical activity drives music choice, not the other way around. Specifically, high-activity days Granger-cause a shift toward higher-energy music on subsequent days, but high-energy music listening does not Granger-cause increased physical activity.
@@ -55,5 +64,6 @@ Most studies on music and health focus on simple correlations — people who exe
 - YouTube Data API v3 for video metadata
 - Jupyter Notebooks for analysis and visualization
 - Google Takeout for YouTube watch history (JSON → CSV)
+- Spotify Web API (audio feature enrichment only, no personal Spotify data used)
 
 
