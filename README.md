@@ -1,69 +1,75 @@
 # DSA210-Spring2026
-## Does Your Body Drive Your Playlist? Exploring the Causal Relationship Between Physical Activity and Music Choice
+
+## What Makes a Movie Oscar-Worthy? Predicting Oscar Nominations Using Movie Metadata and Historical Award Data
 
 ## Project Overview
-This project explores the causal relationship between physical activity and music listening behavior using personal data from Apple Health and Spotify. While it's well known that exercise and music go hand in hand, the question of which one drives the other is rarely examined. By combining daily health metrics (steps, heart rate, sleep, exercise minutes) with daily music features (tempo, energy, danceability), this project applies Granger causality analysis and machine learning to determine whether an active body shapes your playlist — or whether your playlist shapes your activity. The goal is to go beyond surface-level correlations and test a directional hypothesis with rigorous statistical methods.
+This project investigates what measurable characteristics predict whether a movie receives an Oscar nomination. While critical acclaim and artistic merit are often cited as the defining factors behind Oscar recognition, the question of which concrete, quantifiable features — budget, runtime, release timing, audience ratings, revenue — actually distinguish Oscar-nominated films from the rest is rarely examined with data. By combining a large movie metadata dataset with historical Oscar nomination records, this project applies statistical testing and machine learning to identify the strongest predictors of nomination and test specific hypotheses about what the Academy truly values when it comes to numbers.
 
 ## Motivation
-Most studies on music and health focus on simple correlations — people who exercise more tend to listen to upbeat music. But correlation doesn't tell us which comes first. This project investigates the direction of causality: does an active day make you crave energetic music afterward, or does pumping up your playlist actually get you moving? By applying Granger causality analysis and predictive modeling, this project aims to untangle which direction the influence flows.
+Every year, thousands of movies are released, but only a handful receive Oscar nominations. Industry discussions around "Oscar bait" suggest that certain patterns exist — dramas released in the fall, with longer runtimes and moderate budgets, tend to get nominated more often. But is this actually supported by data? Are big-budget blockbusters more or less likely to be recognized? Does releasing a film in October genuinely improve its chances compared to a summer release? This project moves beyond speculation by quantifying these patterns. By merging movie-level features with nomination outcomes, the goal is to determine which factors genuinely matter and whether a model can predict nomination likelihood from a movie's measurable attributes alone.
 
 ## Objectives
-- **Collect the Data:** Export personal data from Apple Health and Spotify, enrich with audio features via the Spotify Web API.
-- **Analyze the Gathered Data:** Aggregate daily health and music metrics, explore trends and patterns over 6 months.
-- **Test Causality:** Apply Granger causality analysis to determine the direction of influence between activity and music choice.
-- **Develop a Model:** Build predictive models to forecast music feature shifts based on prior physical activity levels.
+- **Collect and Merge the Data:** Combine the TMDB movie metadata dataset with the historical Oscar Award dataset, matching on movie title and release year to create a single enriched dataset with a binary nomination label.
+- **Analyze the Data:** Explore distributions and trends across nominated vs. non-nominated films, identifying visual and statistical differences in budget, runtime, ratings, revenue, genre, and release month.
+- **Test Hypotheses:** Apply statistical tests (t-tests, chi-square) to determine whether observed differences between nominated and non-nominated films are statistically significant — not just apparent in plots.
+- **Build a Predictive Model:** Train a classification model to predict whether a movie gets nominated based on its features, and analyze feature importance to answer which factors carry the most weight.
 
 ## Research Questions
-- **Does physical activity Granger-cause a shift toward higher-energy music on subsequent days?**
-- **Does high-energy music listening Granger-cause increased physical activity the following day?**
-- **Which health metrics (steps, heart rate, exercise minutes) are the strongest predictors of music choice?**
-- **Are there weekly or seasonal patterns in the activity–music relationship?**
+- **Do Oscar-nominated films have significantly higher budgets than non-nominated films?**
+- **Is there a "sweet spot" for runtime that increases nomination likelihood?**
+- **Does release month matter — are fall releases (September–December) more likely to be nominated?**
+- **Are audience ratings (vote average) a strong predictor, or does popularity matter more?**
+- **Which single feature is the strongest predictor of Oscar nomination: budget, ratings, revenue, or runtime?**
+- **Can a machine learning model reliably distinguish nominated films from non-nominated ones using only numerical features?**
 
 ## Dataset
 
-### Apple Health Data (Exported from personal iPhone):
-- **Daily step count** and walking/running distance
-- **Active energy burned** (kcal)
-- **Exercise minutes**
-- **Resting heart rate** and heart rate variability
-- **Sleep duration** and bedtime/wake time
-- **Headphone audio levels** (average dB, peak dB, and exposure duration per day)
-- Collection: Apple Health app → Export All Health Data (XML → CSV)
+### TMDB Movie Metadata (Kaggle):
+- ~5,000 movies with features including:
+  - **Budget** (USD)
+  - **Revenue** (USD)
+  - **Runtime** (minutes)
+  - **Vote average** (0–10 scale) and **vote count**
+  - **Popularity** score
+  - **Release date** (used to extract release month and year)
+  - **Genres** (JSON-encoded, parsed into individual genre labels)
+  - **Original language** and **production companies**
+- Source: [kaggle.com/datasets/tmdb/tmdb-movie-metadata](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata)
 
-### YouTube & YouTube Music Data (Google Takeout + YouTube Data API):
-- **Watch history** filtered for music content (YouTube Music listens + music videos on YouTube)
-- **Audio features** enriched via YouTube Data API:
-  - Daily listen counts and total listening duration per day
-  - Video category (to filter music content)
-  - Video title and channel name (for artist/genre inference)
-  - Genre/mood proxies inferred from video metadata (when Spotify match not found)
-  - Listening time-of-day distribution (morning, afternoon, evening, night)
-  - Platform split: proportion of daily music consumption on YouTube Music vs. Spotify
-- Collection: Google Takeout → Google Account → Data & Privacy → Download Your Data → select YouTube → watch-history.json
+### The Oscar Award, 1927–2025 (Kaggle):
+- Complete historical record of all Oscar nominations and winners, including:
+  - **Year of ceremony**
+  - **Category** (Best Picture, Best Director, Best Actor, etc.)
+  - **Film name**
+  - **Winner status** (True/False)
+- Source: [kaggle.com/datasets/unanimad/the-oscar-award](https://www.kaggle.com/datasets/unanimad/the-oscar-award)
 
-### Audio Feature Enrichment (Spotify Web API):
-- YouTube Music tracks are matched to Spotify using track name + artist
-- Audio features extracted via Spotify Web API:
-  - Average energy (0.0–1.0)
-  - Average tempo (BPM)
-  - Average danceability (0.0–1.0)
-  - Average valence (0.0–1.0, musical positivity)
-- Unmatched tracks are logged and excluded from analysis
+### Enrichment
+The TMDB dataset serves as the base. The Oscar dataset is merged in to add:
+- A binary label: `nominated` (1 if the film received at least one Oscar nomination, 0 otherwise)
+- `nomination_count`: total number of nominations the film received across all categories
+- `winner`: whether the film won at least one Oscar
+
+This enrichment transforms a general movie metadata dataset into one that can answer award-specific questions with statistical rigor.
 
 ## Hypothesis
 
-**Directional Hypothesis:** Physical activity drives music choice, not the other way around. Specifically, high-activity days Granger-cause a shift toward higher-energy music on subsequent days, but high-energy music listening does not Granger-cause increased physical activity.
+**Directional Hypothesis:** Oscar-nominated films are systematically different from non-nominated films in measurable ways — specifically, they tend to have higher budgets, longer runtimes, higher audience ratings, and are more likely to be released in the final quarter of the year (October–December).
 
-**Null Hypothesis (H₀):** Physical activity levels do not Granger-cause changes in music listening features (energy, tempo, danceability). There is no statistically significant directional relationship from activity to music choice.
+**Null Hypothesis (H₀):** There is no statistically significant difference in budget, runtime, vote average, or release month distribution between Oscar-nominated and non-nominated films. Any observed differences are due to random variation.
 
-**Alternative Hypothesis (H₁):** Physical activity levels do Granger-cause shifts in music listening features on subsequent days, while music features do not Granger-cause changes in physical activity — indicating a one-directional influence from body to playlist.
+**Alternative Hypothesis (H₁):** Oscar-nominated films have significantly higher budgets, longer runtimes, and higher audience ratings than non-nominated films, and are disproportionately released in Q4 (October–December) compared to the rest of the year.
+
+## Plan
+| Phase | Description | Deadline |
+|-------|-------------|----------|
+| Data Collection | Download, clean, and merge both datasets | April 14 |
+| EDA & Hypothesis Testing | Visualize distributions, run statistical tests | April 14 |
+| Machine Learning | Train classification models, analyze feature importance | May 5 |
+| Final Report | Write up findings, limitations, and conclusions | May 18 |
 
 ## Tools & Technologies
-- Python (pandas, numpy, scipy, scikit-learn, statsmodels, matplotlib, seaborn)
-- Apple Health export (XML → CSV)
-- YouTube Data API v3 for video metadata
-- Jupyter Notebooks for analysis and visualization
-- Google Takeout for YouTube watch history (JSON → CSV)
-- Spotify Web API (audio feature enrichment only, no personal Spotify data used)
-
+- Python (pandas, numpy, scipy, scikit-learn, matplotlib, seaborn)
+- Jupyter Notebook for analysis and visualization
+- GitHub for version control and submission
 
