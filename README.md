@@ -1,6 +1,6 @@
 # DSA210-Spring2026
 
-## What Makes a Movie Oscar-Worthy? Predicting Oscar Nominations Using Movie Metadata and Historical Award Data
+## What Makes a Movie Oscar Worthy? Predicting Oscar Nominations Using Movie Metadata and Historical Award Data
 
 ## Project Overview
 This project investigates what measurable characteristics predict whether a movie receives an Oscar nomination. While critical acclaim and artistic merit are often cited as the defining factors behind Oscar recognition, the question of which concrete, quantifiable features — budget, runtime, release timing, audience ratings, revenue — actually distinguish Oscar-nominated films from the rest is rarely examined with data. By combining a large movie metadata dataset with historical Oscar nomination records, this project applies statistical testing and machine learning to identify the strongest predictors of nomination and test specific hypotheses about what the Academy truly values when it comes to numbers.
